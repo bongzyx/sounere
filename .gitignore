@@ -174,3 +174,5 @@ __pycache__
 
 tempCodeRunnerFile.py
 souneur.ai
+
+*.sqlite

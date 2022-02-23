@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, url_for, abort
 # from werkzeug.security import generate_password_hash, check_password_has
 
 from app import db
-from ..models.user import User
+from ..models.User import User
 
 api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -26,3 +26,21 @@ def register():
     db.session.commit()
 
     return (jsonify({"username": user.username, "given_name": user.given_name}), 201)
+
+
+@api.post('/login')
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if username is None or password is None:
+        return (jsonify({"error": "username or password not specified"}), 400)
+
+    user = User.query.filter_by(username=username).first()
+    if user:
+        if user.verify_password(password):
+            return (jsonify({"username": user.username, "given_name": user.given_name}), 201)
+        else:
+            return (jsonify({"error": "wrong username or password"}), 400)
+    else:
+        return (jsonify({"error": "wrong username or password"}), 400)

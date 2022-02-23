@@ -30,3 +30,6 @@ class User(db.Model):
     #     except:
     #         return
     #     return User.query.get(data['id'])
+
+    def __repr__(self):
+        return f"User('{self.username}')"

@@ -1,11 +1,8 @@
 from flask import Blueprint, request, jsonify, url_for, abort
-# from werkzeug.security import generate_password_hash, check_password_has
 
-from app import db, app
+from app import db
 from ..models.User import User
 from app import jwt
-from functools import wraps
-from datetime import datetime, timedelta
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import create_refresh_token
@@ -15,42 +12,6 @@ from flask_jwt_extended import current_user
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
-
-# def token_required(f):
-#     @wraps(f)
-#     def _verify(*args, **kwargs):
-#         token = None
-#         if 'Authorization' in request.headers:
-#             token = request.headers['Authorization'].split(" ")[-1]
-
-#         if not token:
-#             return jsonify({'message': 'Missing Token'}), 401
-
-#         invalid_msg = {
-#             'message': 'Invalid Token',
-#             'authenticated': False
-#         }
-#         expired_msg = {
-#             'message': 'Expired Token, please re-authenticate.',
-#             'authenticated': False
-#         }
-
-#         try:
-#             data = jwt.decode(
-#                 token, app.config['SECRET_KEY'], algorithms=["HS256"])
-#             print(data)
-#             user = User.query.filter_by(username=data['sub']).first()
-#             if not user:
-#                 raise RuntimeError('User not found')
-#             return f(user, *args, **kwargs)
-#         except jwt.ExpiredSignatureError:
-#             # 401 is Unauthorized HTTP status code
-#             return jsonify(expired_msg), 401
-#         except (jwt.InvalidTokenError, Exception) as e:
-#             print(e)
-#             return jsonify(invalid_msg), 401
-
-#     return _verify
 
 @jwt.user_identity_loader
 def user_identity_lookup(user):
@@ -120,3 +81,8 @@ def user():
         return (jsonify({"yay": current_user.username}), 200)
     else:
         return jsonify(logged_in_as="anonymous user")
+
+
+@auth.get('/test')
+def test():
+    return jsonify(logged_in_as="anonymous user")

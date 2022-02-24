@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
 
@@ -18,11 +18,14 @@ def create_app():
 app = create_app()
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
+CORS(app)
 
 
 def register_routes():
     from app.routes.auth import auth
+    from app.routes.tools import tools
     app.register_blueprint(auth)
+    app.register_blueprint(tools)
 
 
 register_routes()

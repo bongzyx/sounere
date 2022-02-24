@@ -176,3 +176,4 @@ tempCodeRunnerFile.py
 souneur.ai
 
 *.sqlite
+api/app/test_mp3/*

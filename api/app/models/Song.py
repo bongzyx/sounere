@@ -1,6 +1,7 @@
 from email.policy import default
 from app import db
 from datetime import datetime
+import time
 
 song_artist = db.Table('song_artist',
                        db.Column('song_id', db.Integer,
@@ -36,7 +37,8 @@ class Song(db.Model):
     def __init__(self, tag, filepath, filename):
         self.song_name = tag.title if tag.title else filename.replace(
             ".mp3", '').split(" - ")[1]
-        self.song_length = tag.duration
+        self.song_length = time.strftime(
+            '%M:%S', time.gmtime(int(tag.duration)))
         self.year = tag.year
         self.lyrics = tag.extra.get('lyrics')
         self.filesize = tag.filesize

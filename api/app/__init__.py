@@ -24,8 +24,17 @@ CORS(app)
 def register_routes():
     from app.routes.auth import auth
     from app.routes.tools import tools
+    from app.routes.requests import requests
+    from app.routes.metadata import metadata
+    from app.routes.search import search
+    from app.routes.playlist import playlist
+
     app.register_blueprint(auth)
     app.register_blueprint(tools)
+    app.register_blueprint(requests)
+    app.register_blueprint(metadata)
+    app.register_blueprint(search)
+    app.register_blueprint(playlist)
 
 
 register_routes()

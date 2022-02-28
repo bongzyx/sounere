@@ -24,7 +24,9 @@ tools = Blueprint('tools', __name__, url_prefix='/tools')
 
 @tools.get('/startScan')
 def startScan():
-    db.drop_all()
+    Artist.__table__.drop(db.engine)
+    Album.__table__.drop(db.engine)
+    Song.__table__.drop(db.engine)
     db.create_all()
 
     path = "/Users/brandonong/Desktop/projects/sounere/api/app/test_mp3/"

@@ -21,10 +21,10 @@ song_album = db.Table('song_album',
 class Song(db.Model):
     __tablename__ = 'song'
     song_id = db.Column(db.Integer, primary_key=True)
-    song_name = db.Column(db.String(120), nullable=False)
-    song_length = db.Column(db.String(), nullable=False)
+    song_name = db.Column(db.String, nullable=False)
+    song_length = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer, nullable=True)
-    lyrics = db.Column(db.String(), nullable=True)
+    lyrics = db.Column(db.String, nullable=True)
     filesize = db.Column(db.Integer, nullable=False)
     bitrate = db.Column(db.Integer, nullable=False)
     file_path = db.Column(db.String, nullable=False)
